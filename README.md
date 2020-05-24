@@ -160,14 +160,25 @@ From Fig. 7, we see that peer-to-peer exchange reduces the total number of messa
 
 # References
 [1] https://en.wikipedia.org/wiki/Flooding_(computer_networking)
+
 [2] https://github.com/libp2p/specs/tree/master/pubsub/gossipsub
+
 [3] https://en.wikipedia.org/wiki/Routing_table
+
 [4] https://en.wikipedia.org/wiki/Distributed_hash_table
+
 [5] http://www.bittorrent.org/
+
 [6] https://bitcoin.org/
+
 [7] https://www.ethereum.org/
+
 [8] https://en.wikipedia.org/wiki/Gossip_protocol
+
 [9] Maymounkov, Petar and Mazieres, David. Kademlia: A Peer-to-Peer Information System Based on the XOR Metric. IPTPS '01. 2002
+
 [10] https://github.com/libp2p/specs/tree/master/pubsub/gossipsub
+
 [11] https://github.com/ethereum/eth2.0-specs
+
 [12] https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2019-May/016994.html
