@@ -1,4 +1,4 @@
-Modeling of methods for message routing in a network, with greater efficiency than naive gossip broadcast. The methods we implement and instrument are motivated not only by gossip protocols but also by standard Internet routing.
+Modeling of methods for message routing in a network, with greater efficiency than naive gossip broadcast. The methods we implement and instrument are motivated not only by gossip protocols but also by standard Internet routing. Includes experiments on how different protocols and their parameters affect peer-discovery of new nodes in an established network.
 
 # Table Of Contents
 1. [How To Run](#how-to-run)
