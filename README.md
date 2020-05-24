@@ -3,7 +3,7 @@ Modeling of methods for message routing in a network, with greater efficiency th
 # Table Of Contents
 1. [How To Run](#how-to-run)
 2. [Peer Protocol](#peer-protocols)
-3. [Our Solution](#our-solution)
+3. [New Solution](#new-solution)
 4. [Experiments](#experiments)
 
 # How To Run
