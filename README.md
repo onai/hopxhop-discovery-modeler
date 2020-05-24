@@ -93,7 +93,7 @@ at each peer:
        select |peers| - D mesh peers at random and remove them from the mesh
     sleep t
 ```
-Where D is the target degree, D_low and D_high represent admissible mesh degree bounds.
+Where `D` is the target degree, `D_low` and `D_high` represent admissible mesh degree bounds.
 ## Gossipsub
 Gossipsub [10] augments meshsub with gossip about message flow in the network. The gossip is emitted to random subsets of peers not in the mesh, similar to randomsub. These messages are metadata about the message flow e.g. since peers cache messages, message ids of seen messages in the last few seconds can be gossiped in the network so that peers can request them for transmission. Gossipsub provides a bounded degree and amplification factor with the meshsub and augments it using randomsub messages. Ethereum 2.0 (Serenity) [11] will use gossipsub as its wire protocol.
 ## Erlay
