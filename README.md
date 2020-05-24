@@ -1,10 +1,10 @@
 Modeling of methods for message routing in a network, with greater efficiency than naive gossip broadcast. The methods we implement and instrument are motivated not only by gossip protocols but also by standard Internet routing.
 
 # Table Of Contents
-[How To Run](#how-to-run)
-[Peer Protocol](#peer-protocols)
-[Our Solution](#our-solution)
-[Experiments](#experiments)
+1. [How To Run](#how-to-run)
+2. [Peer Protocol](#peer-protocols)
+3. [Our Solution](#our-solution)
+4. [Experiments](#experiments)
 
 # How To Run
 ## Requirements
