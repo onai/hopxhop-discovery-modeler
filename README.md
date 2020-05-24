@@ -74,7 +74,7 @@ Networks can have rendezvous points, routers that can bootstrap newer peers, to 
 Nearby peers are discovered with DHT walks or rendezvous points. After peer discovery, each peer forwards incoming messages to all known peers. The peer maintains a timed cache of previous messages, so that seen messages are not further forwarded. It also never forwards a message back to the source or the peer that forwarded the message. The flooding process is illustrated on Figure 1.
 
 ![Figure1](images/image5.png)
-<p align="center"> Figure 1: Flooding </p>
+<p align="left"> Figure 1: Flooding </p>
 
 Flooding has advantages and disadvantages. It is easy to implement, minimizes latency, and is highly robust. But, the outbound degree of the network is unbounded, which results in high bandwidth consumption and impacts scalability. If a node is densely connected, it might not have enough bandwidth to forward messages to all its peers.
 
