@@ -28,10 +28,10 @@ Example usage:
 ```
 python flooding.py 5 50 3 4
 
-#n  = 5     -  5 new nodes to be added
-#N  = 50   -  50 established nodes
-#ds = 3     - degree range start
-#de = 4     - degree range end
+#n  = 5   - 5 new nodes to be added
+#N  = 50  - 50 established nodes
+#ds = 3   - degree range start
+#de = 4   - degree range end
 
 ```
 
@@ -53,10 +53,10 @@ Example usage:
 ```
 python dht.py 5 50 3 4
 
-#n  = 5     -  5 new nodes to be added
-#N  = 50    -  50 established nodes
-#ds = 3     - degree range start
-#de = 4     - degree range end
+#n  = 5   - 5 new nodes to be added
+#N  = 50  - 50 established nodes
+#ds = 3   - degree range start
+#de = 4   - degree range end
 
 ```
 
