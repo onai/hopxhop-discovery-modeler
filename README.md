@@ -106,7 +106,7 @@ Routing tables in routers store routes and metrics (latency, throughput, bandwid
 <p align="center">Figure 2: Routing table on a computer with router 192.168.0.1</p>
 
 
-We consider hop-by-hop routing (as in Fig. 2), which lists for all known peers, the address of the next peer (hop) along the path to the destination. Fig. 3 illustrates what hop-by-hop routing table looks like in the modeled peer-to-peer network. The routing table will have columns src, next hop, dest, and latency. Src is the source node, dest is the destination node, next hop refers to the next hop to be taken by the src node in order to reach the destination, and latency refers to the latency of the hop. 
+We consider hop-by-hop routing (as in Fig. 2), which lists for all known peers, the address of the next peer (hop) along the path to the destination. Fig. 3 illustrates what hop-by-hop routing table looks like in the modeled peer-to-peer network. The routing table will have columns src, next hop, dest, and latency. `src` is the source node, `dest` is the destination node, `next hop` refers to the next hop to be taken by the `src` node in order to reach the destination, and `latency` refers to the latency of the hop. 
 
 ![Figure3](images/image6.png)
 <p align="center">Figure 3: Our wire protocol</p>
@@ -116,17 +116,18 @@ Consider that each peer maintains a routing table like in Figure 3. Every new pe
 
 When a peer wants to send messages to another peer, it looks for the peer’s path in its table. If it does not find it, it asks its neighbors. If none of the peers know about the destination, it sends messages to all known peers asking about the destination peer. Such messages are flooded through the network until the destination address is found. If the peer finds the table entry for the destination, it selects the best route by comparing latencies in its table and goes for least latency.
 
-The best route selected by peer 1 to send a message to 6 is shown with dashed lines. Peer 1 finds that if it sends a message to 6 via 3, it will result in a latency of 12 and via 4 would result in a latency of 5, so it sends the message through 4 and takes path 1 -> 2 -> 4 -> 6
+The best route selected by peer 1 to send a message to 6 is shown with dashed lines. Peer 1 finds that if it sends a message to 6 via 3, it will result in a latency of 12 and via 4 would result in a latency of 5, so it sends the message through 4 and takes path `1 -> 2 -> 4 -> 6`
 
 
 # Experiments
 We explore two techniques in peer discovery to analyze the number of messages passed and time spent in communicating with newly added nodes in an established DHT peer-to-peer network.
 
-Consider an established network of ‘N’ nodes with average degree ‘d’, and ‘n’ new nodes now being added, each of the new nodes known to exactly one of the pre-existing nodes. How long does it take for knowledge of the new nodes to spread and for messages to be routed? How many messages must be transmitted?
-## Peer to peer exchange
-In this technique, each node in the network looks at their neighbors’ hash table to see if there is any new or more optimal routes in the network and updates itself. One iteration ‘t’ of peer to peer exchange involves every node exchanging tables with its neighbors once. We assume that in this network everyone knows everyone (before the addition of new nodes). When ‘n’ new nodes are added, the new nodes only know one random neighbor in the established network. We find out how many iterations of peer to peer exchange is needed for all ‘N’ nodes to find out about the new ‘n’ nodes. We also find out how many total messages are passed in the network.
+Consider an established network of `N` nodes with average degree `d`, and `n` new nodes now being added, each of the new nodes known to exactly one of the pre-existing nodes. How long does it take for knowledge of the new nodes to spread and for messages to be routed? How many messages must be transmitted?
 
-In Fig. 4 (a) we find that number of messages sent increases linearly when we increase the total number of established nodes. For 3000 nodes the total number of messages sent end up to an average of 38561. We fixed ‘n’ and ‘d’ to 10 and 4.5 respectively. We also find that ‘t’ to be 4 for all the established node sizes. In Fig. 4(b) we find that number of iterations ‘t’ decreases as average degree of nodes ‘d’ increases until a point (‘d’ = 22 here) after which we only need one iteration for every node to find every node. This means that high degree of connectivity in a network is highly desirable. But at the same time we see in 4(c) that the total messages sent still increases slightly as network reaches higher degree of connectivity. We fixed ‘N’ and ‘n’ as 500 and 10 respectively for this experiment. In Fig. 4(d), shows the impact of increasing number of new nodes ‘n’ in the network. We find that the messages sent is pretty much the same when ‘n’ is increased. Also, ‘t’ remains a constant 4 in this experiment. We fixed ‘N’ and ‘d’ to 500 and 4.5 respectively.
+## Peer to peer exchange
+In this technique, each node in the network looks at their neighbors’ hash table to see if there is any new or more optimal routes in the network and updates itself. One iteration `t` of peer to peer exchange involves every node exchanging tables with its neighbors once. We assume that in this network everyone knows everyone (before the addition of new nodes). When `n` new nodes are added, the new nodes only know one random neighbor in the established network. We find out how many iterations of peer to peer exchange is needed for all `N` nodes to find out about the new `n` nodes. We also find out how many total messages are passed in the network.
+
+In Fig. 4 (a) we find that number of messages sent increases linearly when we increase the total number of established nodes. For 3000 nodes the total number of messages sent end up to an average of 38561. We fixed `n` and `d` to 10 and 4.5 respectively. We also find that `t` to be 4 for all the established node sizes. In Fig. 4(b) we find that number of iterations `t` decreases as average degree of nodes `d` increases until a point (`d = 22` here) after which we only need one iteration for every node to find every node. This means that high degree of connectivity in a network is highly desirable. But at the same time we see in 4(c) that the total messages sent still increases slightly as network reaches higher degree of connectivity. We fixed `N` and `n` as 500 and 10 respectively for this experiment. In Fig. 4(d), shows the impact of increasing number of new nodes `n` in the network. We find that the messages sent is pretty much the same when `n` is increased. Also, `t` remains a constant 4 in this experiment. We fixed `N` and `d` to 500 and 4.5 respectively.
 
 
 
@@ -135,15 +136,15 @@ In Fig. 4 (a) we find that number of messages sent increases linearly when we in
 
 
 ## Flooding
-In this technique, a node trying to send a message to a given destination that it does not already have in its table will simply forward the message to all its neighbors. The neighbors follow the same procedure. In this way, the message is flooded until it reaches a node that does have the destination in its table and can route the message in a more targeted way. We find out the average distance from each node to the new ‘n’ nodes and how many total number of messages are passed in the network for everyone to find everyone else after ‘n’ new nodes are added. We also define ‘r’, the radius, as the depth to which each node can pre-discover its neighbors. For example if ‘r’ is 2, each node would know its neighbor and its neighbor’s neighbors.
+In this technique, a node trying to send a message to a given destination that it does not already have in its table will simply forward the message to all its neighbors. The neighbors follow the same procedure. In this way, the message is flooded until it reaches a node that does have the destination in its table and can route the message in a more targeted way. We find out the average distance from each node to the new ‘n’ nodes and how many total number of messages are passed in the network for everyone to find everyone else after `n` new nodes are added. We also define `r`, the radius, as the depth to which each node can pre-discover its neighbors. For example if `r` is 2, each node would know its neighbor and its neighbor’s neighbors.
 
-In Fig. 5(a) we see that as the number of established nodes increases as the total messages increases as expected. Also, in 5(b) we see that the average time for each node to reach the new ‘n’ nodes increases slightly as the number of established nodes increases. We fixed ‘n’, ‘r’, and ‘d’ as 10, 5 and 4.5 respectively. 5(c) and 5(d) shows the impact of increasing the average degree of nodes. It drastically decreases the total number of messages as now that the network is well-connected, it can find the new nodes at a lower depth. We also find the average time to reach the ‘n’ nodes to be slightly lower as a result of finding the nodes at a lower depth. We fixed ‘n’, ‘r’, and ‘N’ as 10, 5 and 500 respectively.
+In Fig. 5(a) we see that as the number of established nodes increases as the total messages increases as expected. Also, in 5(b) we see that the average time for each node to reach the new `n` nodes increases slightly as the number of established nodes increases. We fixed `n`, `r`, and `d` as 10, 5 and 4.5 respectively. 5(c) and 5(d) shows the impact of increasing the average degree of nodes. It drastically decreases the total number of messages as now that the network is well-connected, it can find the new nodes at a lower depth. We also find the average time to reach the `n` nodes to be slightly lower as a result of finding the nodes at a lower depth. We fixed `n`, `r`, and `N` as 10, 5 and 500 respectively.
 
 
 ![Figure5](images/image1.png)
 <p align="center">Fig. 5: Established nodes, Degree vs Total messages</p>
 
-In Fig. 6 we find that increasing ‘r’ decreases the total messages sent drastically. One factor that influences this is that a lot of messages are sent during the pre-discovery stage where we find nodes till depth ‘r’ during the setup of the established network. As we set ‘r’ to 12, we find that the total messages passed is 500, which means that in an ideal situation where everyone knows everyone, each node only has to send N messages to find new nodes. We fixed ‘n’, ‘d’ and ‘N’ as 10, 4.5 and 500 respectively.
+In Fig. 6 we find that increasing `r` decreases the total messages sent drastically. One factor that influences this is that a lot of messages are sent during the pre-discovery stage where we find nodes till depth `r` during the setup of the established network. As we set `r` to 12, we find that the total messages passed is 500, which means that in an ideal situation where everyone knows everyone, each node only has to send N messages to find new nodes. We fixed `n`, `d`, and `N` as 10, 4.5 and 500 respectively.
 
 
 ![Figure6](images/image4.png)
@@ -152,7 +153,7 @@ In Fig. 6 we find that increasing ‘r’ decreases the total messages sent dras
 
 
 ## Conclusion
-From Fig. 7, we see that peer-to-peer exchange reduces the total number of messages sent drastically compared to flooding. We fixed ‘N’, ‘n’, ‘d’, and ‘r’ to 500, 10, 4.5 and 5 respectively. 
+From Fig. 7, we see that peer-to-peer exchange reduces the total number of messages sent drastically compared to flooding. We fixed `N`, `n`, `d`, and `r` to 500, 10, 4.5 and 5 respectively. 
 
 
 ![Figure7](images/image2.png)
