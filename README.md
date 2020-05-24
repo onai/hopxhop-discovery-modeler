@@ -73,7 +73,8 @@ Networks can have rendezvous points, routers that can bootstrap newer peers, to 
 
 Nearby peers are discovered with DHT walks or rendezvous points. After peer discovery, each peer forwards incoming messages to all known peers. The peer maintains a timed cache of previous messages, so that seen messages are not further forwarded. It also never forwards a message back to the source or the peer that forwarded the message. The flooding process is illustrated on Figure 1.
 
-Figure 1: Flooding
+![Figure1](images/image5.png)
+<p align="center"> Figure 1: Flooding </p>
 
 Flooding has advantages and disadvantages. It is easy to implement, minimizes latency, and is highly robust. But, the outbound degree of the network is unbounded, which results in high bandwidth consumption and impacts scalability. If a node is densely connected, it might not have enough bandwidth to forward messages to all its peers.
 
@@ -83,7 +84,7 @@ Randomsub is a more scalable variant of floodsub. Instead of forwarding messages
 Meshsub forms an overlay mesh of its view of the network with bidirectional links. Initially, the overlay is constructed in a random fashion by selecting D peers at random and adding them to the mesh, where D is the desired degree of the network.
 
 The mesh is maintained with the following periodic stabilization algorithm:
-
+```
 at each peer:
   loop:
     if |peers| < D_low:
@@ -91,6 +92,7 @@ at each peer:
     if |peers| > D_high:
        select |peers| - D mesh peers at random and remove them from the mesh
     sleep t
+```
 Where D is the target degree, D_low and D_high represent admissible mesh degree bounds.
 ## Gossipsub
 Gossipsub [10] augments meshsub with gossip about message flow in the network. The gossip is emitted to random subsets of peers not in the mesh, similar to randomsub. These messages are metadata about the message flow e.g. since peers cache messages, message ids of seen messages in the last few seconds can be gossiped in the network so that peers can request them for transmission. Gossipsub provides a bounded degree and amplification factor with the meshsub and augments it using randomsub messages. Ethereum 2.0 (Serenity) [11] will use gossipsub as its wire protocol.
@@ -100,13 +102,15 @@ Erlay [12] is an efficient transaction relay protocol solution for Bitcoin. The 
 # New solution
 Routing tables in routers store routes and metrics (latency, throughput, bandwidth etc.) for known peers. A typical routing looks like one in Fig. 2 [3]. Looking at the row, we see that this computer can reach the node 192.168.0.1, which is the router and also the next hop, through the network card 192.168.0.100. Metric indicates the cost associated with using the indicated route. Metrics can be used to determine optimal path to the destination.
 
+![Figure2](images/image7.png)
+<p align="center">Figure 2: Routing table on a computer with router 192.168.0.1</p>
 
-Figure 2: Routing table on a computer with router 192.168.0.1
 
 We consider hop-by-hop routing (as in Fig. 2), which lists for all known peers, the address of the next peer (hop) along the path to the destination. Fig. 3 illustrates what hop-by-hop routing table looks like in the modeled peer-to-peer network. The routing table will have columns src, next hop, dest, and latency. Src is the source node, dest is the destination node, next hop refers to the next hop to be taken by the src node in order to reach the destination, and latency refers to the latency of the hop. 
 
+![Figure3](images/image6.png)
+<p align="center">Figure 3: Our wire protocol</p>
 
-Figure 3: Our wire protocol
 
 Consider that each peer maintains a routing table like in Figure 3. Every new peer will start with a peer discovery process, where it learns about existing peers from a fixed IP address and port in the network. When a peer learns about other peers in the network, it can add it to its table. Connected peers can exchange tables from time to time and add to their own table or replace and entry with a more optimal route.
 
@@ -126,7 +130,9 @@ In Fig. 4 (a) we find that number of messages sent increases linearly when we in
 
 
 
-Figure 4: Peer-to-peer exchange 
+![Figure4](images/image3.png)
+<p align="center">Figure 4: Peer-to-peer exchange </p>
+
 
 ## Flooding
 In this technique, a node trying to send a message to a given destination that it does not already have in its table will simply forward the message to all its neighbors. The neighbors follow the same procedure. In this way, the message is flooded until it reaches a node that does have the destination in its table and can route the message in a more targeted way. We find out the average distance from each node to the new ‘n’ nodes and how many total number of messages are passed in the network for everyone to find everyone else after ‘n’ new nodes are added. We also define ‘r’, the radius, as the depth to which each node can pre-discover its neighbors. For example if ‘r’ is 2, each node would know its neighbor and its neighbor’s neighbors.
@@ -134,20 +140,23 @@ In this technique, a node trying to send a message to a given destination that i
 In Fig. 5(a) we see that as the number of established nodes increases as the total messages increases as expected. Also, in 5(b) we see that the average time for each node to reach the new ‘n’ nodes increases slightly as the number of established nodes increases. We fixed ‘n’, ‘r’, and ‘d’ as 10, 5 and 4.5 respectively. 5(c) and 5(d) shows the impact of increasing the average degree of nodes. It drastically decreases the total number of messages as now that the network is well-connected, it can find the new nodes at a lower depth. We also find the average time to reach the ‘n’ nodes to be slightly lower as a result of finding the nodes at a lower depth. We fixed ‘n’, ‘r’, and ‘N’ as 10, 5 and 500 respectively.
 
 
-
-Fig. 5: Established nodes, Degree vs Total messages
+![Figure5](images/image1.png)
+<p align="center">Fig. 5: Established nodes, Degree vs Total messages</p>
 
 In Fig. 6 we find that increasing ‘r’ decreases the total messages sent drastically. One factor that influences this is that a lot of messages are sent during the pre-discovery stage where we find nodes till depth ‘r’ during the setup of the established network. As we set ‘r’ to 12, we find that the total messages passed is 500, which means that in an ideal situation where everyone knows everyone, each node only has to send N messages to find new nodes. We fixed ‘n’, ‘d’ and ‘N’ as 10, 4.5 and 500 respectively.
 
 
+![Figure6](images/image4.png)
+<p align="center">Figure 6: Radius vs Total messages</p>
 
-Figure 6: Radius vs Total messages
 
 
 ## Conclusion
 From Fig. 7, we see that peer-to-peer exchange reduces the total number of messages sent drastically compared to flooding. We fixed ‘N’, ‘n’, ‘d’, and ‘r’ to 500, 10, 4.5 and 5 respectively. 
 
-Figure 7: Peer to peer vs flooding total messages
+
+![Figure7](images/image2.png)
+<p align="center">Figure 7: Peer to peer vs flooding total messages</p>
 
 # References
 [1] https://en.wikipedia.org/wiki/Flooding_(computer_networking)
